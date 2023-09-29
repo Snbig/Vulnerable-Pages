@@ -24,5 +24,9 @@ def protected_route():
         # If the origin is not allowed, return a JSON error response with a 403 status code
         return jsonify({'error': 'Origin not allowed.'}), 403
 
+@app.route('/')
+def serve_html():
+    return render_template('index.html')
+
 if __name__ == '__main__':
     app.run(debug=True)
