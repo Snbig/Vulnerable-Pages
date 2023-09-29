@@ -8,7 +8,7 @@ def protected_route():
     origin = request.headers.get('Origin')
 
     # Define a list of allowed origins
-    allowed_origins = ['http://localhost:5151']  # Update with your allowed origins
+    allowed_origins = ['http://localhost']  # Update with your allowed origins
 
     # Check if the provided origin is in the allowed origins
     if origin in allowed_origins:
