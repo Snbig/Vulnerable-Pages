@@ -22,6 +22,7 @@ def protected_route():
         return response
     else:
         # If the origin is not allowed, return a JSON error response with a 403 status code
+        response.headers['Access-Control-Allow-Origin'] = '*'
         return jsonify({'error': 'Origin not allowed.'}), 403
 
 @app.route('/')
