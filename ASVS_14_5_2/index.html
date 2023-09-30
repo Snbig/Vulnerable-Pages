@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple Web App</title>
+</head>
+<body>
+    <h1>Simple Web App</h1>
+    <button onclick="callApi()">Call API</button>
+    <p id="response"></p>
+
+    <script>
+        function callApi() {
+            // Make a GET request to the API endpoint
+            fetch('https://spotless-frog-wetsuit.cyclic.cloud/protected')
+                .then(response => response.json())
+                .then(data => {
+                    // Display the API response in the 'response' paragraph
+                    document.getElementById('response').innerText = JSON.stringify(data, null, 2);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    document.getElementById('response').innerText = 'Error occurred.';
+                });
+        }
+    </script>
+</body>
+</html>
