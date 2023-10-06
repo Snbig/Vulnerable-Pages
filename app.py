@@ -3,7 +3,7 @@ from flask_cors import CORS, cross_origin
 app = Flask(__name__)
 
 # ASVS 14.5.2
-@app.route('/protected')
+@app.route('/protected', methods=['GET'])
 @cross_origin(origins=['http://localhost'], methods=['GET'])
 def protected_route():
     origin = request.headers.get('Origin')
@@ -15,17 +15,14 @@ def protected_route():
         return response, 403
 
 # ASVS 14.5.3
-@app.route('/accounts/<account_id>')
+@app.route('/accounts/<account_id>', methods=['DELETE'])
 @cross_origin(send_wildcard=True, methods=['DELETE'])
 def delete_account(account_id):
     accounts = ['victim_123']
-    if request.method == "DELETE":
-        if account_id in accounts:
-            return jsonify({'message': f'Account {account_id} successfully deleted'}), 204
-        else:
-            return jsonify({'error': 'Account not found'}), 404
+    if account_id in accounts:
+        return jsonify({'message': f'Account {account_id} successfully deleted'}), 204
     else:
-        return jsonify({'error': f'Method not allowd {request.method}'}), 405
+        return jsonify({'error': 'Account not found'}), 404
 
 @app.route('/')
 def redirectToGitPage():
