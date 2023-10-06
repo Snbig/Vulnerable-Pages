@@ -6,7 +6,11 @@ app = Flask(__name__)
 @app.route('/protected')
 @cross_origin(origins=['http://localhost'], methods=['GET'])
 def protected_route():
-    response = jsonify({'message': 's3cR3t'})
+    origin = request.headers.get('Origin')
+    if origin == 'http://localhost':
+        response = jsonify({'message': 's3cR3t'})
+    else:
+        response = jsonify({'message': 'Forbidden. Bad Origin.'})
     return response
 
 # ASVS 14.5.3
