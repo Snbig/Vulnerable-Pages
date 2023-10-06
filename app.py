@@ -17,10 +17,8 @@ def protected_route():
 # ASVS 14.5.3
 @app.route('/accounts/<account_id>')
 @cross_origin(send_wildcard=True)
-accounts = {
-    'victim_123': "Account 'victim_123'"
-}
 def delete_account(account_id):
+    accounts = ['victim_123']
     if request.method == "DELETE":
         if account_id in accounts:
             return jsonify({'message': f'Account {account_id} successfully deleted'}), 204
