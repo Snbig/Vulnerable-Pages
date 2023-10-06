@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, jsonify, render_template, redirect
 from flask_cors import CORS, cross_origin
 app = Flask(__name__)
 
@@ -15,6 +15,10 @@ def protected_route():
 def CORS():
     response = jsonify({'message': 's3cR3t'})
     return response
+
+@app.route('/')
+def redirect()
+    return redirect("https://github.com/Snbig/Vulnerable-Pages", code=302)
 
 if __name__ == '__main__':
     app.run(debug=True)
