@@ -17,7 +17,7 @@ def CORS():
     return response
 
 @app.route('/')
-def redirect()
+def redirect():
     return redirect("https://github.com/Snbig/Vulnerable-Pages", code=302)
 
 if __name__ == '__main__':
