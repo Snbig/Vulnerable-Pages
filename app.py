@@ -15,11 +15,17 @@ def protected_route():
         return response, 403
 
 # ASVS 14.5.3
-@app.route('/CORS')
+@app.route('/accounts/<account_id>')
 @cross_origin(send_wildcard=True)
-def CORS():
-    response = jsonify({'message': 's3cR3t'})
-    return response
+accounts = {
+    'victim_123': "Account 'victim_123'"
+}
+def delete_account(account_id):
+    if request.method == "DELETE":
+        if account_id in accounts:
+            return jsonify({'message': f'Account {account_id} successfully deleted'}), 204
+        else:
+            return jsonify({'error': 'Account not found'}), 404
 
 @app.route('/')
 def redirectToGitPage():
