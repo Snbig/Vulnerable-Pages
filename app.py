@@ -24,6 +24,8 @@ def delete_account(account_id):
             return jsonify({'message': f'Account {account_id} successfully deleted'}), 204
         else:
             return jsonify({'error': 'Account not found'}), 404
+    else:
+        return jsonify({'error': 'Method not allowd'}), 405
 
 @app.route('/')
 def redirectToGitPage():
