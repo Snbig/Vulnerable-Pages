@@ -9,9 +9,10 @@ def protected_route():
     origin = request.headers.get('Origin')
     if origin == 'http://localhost':
         response = jsonify({'message': 's3cR3t'})
+        return response
     else:
         response = jsonify({'message': 'Forbidden. Bad Origin.'})
-    return response
+        return response, 403
 
 # ASVS 14.5.3
 @app.route('/CORS')
