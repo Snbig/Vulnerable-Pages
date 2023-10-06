@@ -16,7 +16,7 @@ def protected_route():
 
 # ASVS 14.5.3
 @app.route('/accounts/<account_id>')
-@cross_origin(send_wildcard=True)
+@cross_origin(send_wildcard=True, methods=['DELETE'])
 def delete_account(account_id):
     accounts = ['victim_123']
     if request.method == "DELETE":
