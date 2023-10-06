@@ -16,9 +16,5 @@ def CORS():
     response = jsonify({'message': 's3cR3t'})
     return response
 
-@app.route('/')
-def serve_html():
-    return render_template('index.html')
-
 if __name__ == '__main__':
     app.run(debug=True)
