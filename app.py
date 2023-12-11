@@ -2,6 +2,8 @@ from flask import Flask, request, jsonify, render_template, redirect
 from flask_cors import CORS, cross_origin
 import xml.etree.ElementTree as ET
 import xmlschema
+from jsonschema import validate, ValidationError
+
 app = Flask(__name__, template_folder='.')
 
 # ASVS 14.5.2
@@ -77,6 +79,35 @@ def checkXSD():
         return error_message, 400  # Bad request response
 
     return render_template('ASVS_13_3_1/index.html', error_message=error_message)
+
+
+# ASVS 13.2.2
+@app.route('/submit-json', methods=['POST'])
+@cross_origin(origins=['https://snbig.github.io'], methods=['POST'])
+def checkJSONSchema():
+    json_schema = {
+    "type": "object",
+    "properties": {
+        "name": {"type": "string"},
+        "age": {"type": "integer", "minimum": 0}
+    },
+    "required": ["name", "age"]
+    }
+    try:
+        # Get JSON data from the request
+        data = request.get_json()
+
+        # Validate JSON data against the defined schema
+        validate(data, json_schema)
+
+        # If validation is successful, process the data
+        result = f"Data received: {data}"
+        return jsonify({"status": "success", "result": result})
+
+    except ValidationError as e:
+        # Handle validation errors
+        error_message = f"Invalid input. {e.message}"
+        return jsonify({"status": "error", "message": error_message}), 400
 
 
 @app.route('/')

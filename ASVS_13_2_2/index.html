@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON Schema Validation</title>
+</head>
+<body>
+    <h1>Send name and age in JSON</h1>
+    
+    <form id="dataForm">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+        
+        <label for="age">Age:</label>
+        <input type="number" id="age" name="age" required>
+
+        <button type="button" onclick="submitData()">Submit</button>
+    </form>
+
+    <div id="result"></div>
+
+    <script>
+        function submitData() {
+            // Get form data
+            const name = document.getElementById('name').value;
+            const age = parseInt(document.getElementById('age').value);
+
+            // Create JSON object
+            const jsonData = {
+                name: name,
+                age: age
+            };
+
+            // Make a POST request to the Flask endpoint
+            fetch('https://spotless-frog-wetsuit.cyclic.cloud/submit-json', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(jsonData),
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+            })
+            .then(data => {
+                // Display the result
+                document.getElementById('result').innerText = JSON.stringify(data, null, 2);
+            })
+            .catch(error => {
+                // Display validation error message
+                document.getElementById('result').innerText = `Error: ${error.message}`;
+            });
+        }
+    </script>
+</body>
+</html>
