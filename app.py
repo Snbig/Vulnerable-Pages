@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify, render_template, redirect
 from flask_cors import CORS, cross_origin
-from lxml import etree
+import xmlschema
 app = Flask(__name__, template_folder='.')
 
 # ASVS 14.5.2
@@ -27,31 +27,45 @@ def delete_account(account_id):
 
 # ASVS 13.3.1
 @app.route('/submit-xml', methods=['GET', 'POST'])
-def index():
+
+xsd_schema = """
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="user">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="username" type="xs:string"/>
+        <xs:element name="email" type="xs:string"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
+"""
+
+def checkXSD():
     error_message = None
 
     if request.method == 'POST':
         xml_data = request.data.decode('utf-8')
 
         try:
-            # Parse XML data
-            xml_tree = etree.fromstring(xml_data)
-
             # Validate XML against the XSD schema
-            if schema.validate(xml_tree):
-                # Extract data from the validated XML
-                username = xml_tree.find('.//username').text
-                email = xml_tree.find('.//email').text
+            schema.validate(xml_data)
 
-                # Process the data (you can perform further processing here)
-                # For demonstration purposes, we just print the data
-                print(f"Username: {username}, Email: {email}")
-                return '', 200  # Successful response
+            # Parse XML data using xml.etree.ElementTree
+            xml_tree = ET.fromstring(xml_data)
 
-            else:
-                error_message = 'Invalid XML format. Please check your input.'
+            # Extract data from the validated XML
+            username = xml_tree.find('.//username').text
+            email = xml_tree.find('.//email').text
 
-        except etree.XMLSyntaxError as e:
+            # Process the data (you can perform further processing here)
+            # For demonstration purposes, we just print the data
+            print(f"Username: {username}, Email: {email}")
+            return '', 200  # Successful response
+
+        except xmlschema.XMLSchemaValidationError as e:
+            error_message = f'Error validating XML against XSD schema: {str(e)}'
+        except ET.ParseError as e:
             error_message = f'Error parsing XML: {str(e)}'
 
         return error_message, 400  # Bad request response
