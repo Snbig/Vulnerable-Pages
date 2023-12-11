@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify, render_template, redirect
 from flask_cors import CORS, cross_origin
+from lxml import etree
 app = Flask(__name__, template_folder='.')
 
 # ASVS 14.5.2
