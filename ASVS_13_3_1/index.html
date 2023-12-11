@@ -62,7 +62,7 @@
             var resultDiv = document.getElementById('result');
             
             resultDiv.innerHTML = ''; // Clear existing content
-            var textNode = document.createTextNode('Error: ' + responseText);
+            var textNode = document.createTextNode(responseText);
             resultDiv.appendChild(textNode);
             resultDiv.classList.add('error-message');
         }
