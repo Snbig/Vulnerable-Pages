@@ -10,3 +10,4 @@ uvicorn
 waitress
 Werkzeug
 flask-cors
+lxml
