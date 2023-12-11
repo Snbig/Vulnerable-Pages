@@ -40,7 +40,7 @@
             xhr.setRequestHeader('Content-Type', 'application/xml');
             xhr.onreadystatechange = function() {
                 if (xhr.readyState == 4 && xhr.status == 200) {
-                    alert('XML data sent successfully!');
+                    alert('XML data validated successfully!');
                 }
             };
             xhr.send(new XMLSerializer().serializeToString(xmlDoc));

@@ -31,14 +31,21 @@ def delete_account(account_id):
 def checkXSD():
     xsd_schema = """
     <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
-        <xs:element name="user">
-            <xs:complexType>
-                <xs:sequence>
-                    <xs:element name="username" type="xs:string"/>
-                    <xs:element name="email" type="xs:string"/>
-                </xs:sequence>
-            </xs:complexType>
-        </xs:element>
+    <xs:element name="user">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="username" type="xs:string"/>
+                <xs:element name="email">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <!-- Add a pattern for email validation -->
+                            <xs:pattern value="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
     </xs:schema>
     """
     error_message = None
@@ -59,8 +66,6 @@ def checkXSD():
             email = xml_tree.find('.//email').text
 
             # Process the data (you can perform further processing here)
-            # For demonstration purposes, we just print the data
-            print(f"Username: {username}, Email: {email}")
             return '', 200  # Successful response
 
         except xmlschema.XMLSchemaValidationError as e:
