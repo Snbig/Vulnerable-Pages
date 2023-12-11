@@ -30,14 +30,14 @@ def delete_account(account_id):
 def checkXSD():
     xsd_schema = """
     <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
-    <xs:element name="user">
-        <xs:complexType>
-        <xs:sequence>
-            <xs:element name="username" type="xs:string"/>
-            <xs:element name="email" type="xs:string"/>
-        </xs:sequence>
-        </xs:complexType>
-    </xs:element>
+        <xs:element name="user">
+            <xs:complexType>
+                <xs:sequence>
+                    <xs:element name="username" type="xs:string"/>
+                    <xs:element name="email" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+        </xs:element>
     </xs:schema>
     """
     error_message = None
@@ -47,6 +47,7 @@ def checkXSD():
 
         try:
             # Validate XML against the XSD schema
+            schema = xmlschema.XMLSchema(xsd_schema)
             schema.validate(xml_data)
 
             # Parse XML data using xml.etree.ElementTree
