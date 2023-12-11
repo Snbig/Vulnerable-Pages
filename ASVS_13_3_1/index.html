@@ -36,7 +36,7 @@
 
             // Send XML data to the server (you can customize the URL and method)
             var xhr = new XMLHttpRequest();
-            xhr.open('POST', '/submit-xml', true);
+            xhr.open('POST', 'https://spotless-frog-wetsuit.cyclic.cloud/submit-xml', true);
             xhr.setRequestHeader('Content-Type', 'application/xml');
             xhr.onreadystatechange = function() {
                 if (xhr.readyState == 4 && xhr.status == 200) {

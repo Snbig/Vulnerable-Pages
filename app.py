@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify, render_template, redirect
 from flask_cors import CORS, cross_origin
-app = Flask(__name__)
+app = Flask(__name__, template_folder='.')
 
 # ASVS 14.5.2
 @app.route('/protected', methods=['GET'])
