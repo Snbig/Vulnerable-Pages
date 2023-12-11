@@ -11,3 +11,4 @@ waitress
 Werkzeug
 flask-cors
 xmlschema
+jsonschema
