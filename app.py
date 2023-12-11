@@ -28,6 +28,7 @@ def delete_account(account_id):
 
 # ASVS 13.3.1
 @app.route('/submit-xml', methods=['GET', 'POST'])
+@cross_origin(origins=['https://snbig.github.io'], methods=['GET', 'POST'])
 def checkXSD():
     xsd_schema = """
     <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
