@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Send XML Data</title>
+</head>
+<body>
+    <h1>Send Username and Email in XML</h1>
+
+    <form id="xmlForm">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required><br>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required><br>
+
+        <button type="button" onclick="sendXML()">Send XML</button>
+    </form>
+
+    <script>
+        function sendXML() {
+            // Get values from form
+            var username = document.getElementById('username').value;
+            var email = document.getElementById('email').value;
+
+            // Create XML string
+            var xmlString = '<user>';
+            xmlString += '<username>' + username + '</username>';
+            xmlString += '<email>' + email + '</email>';
+            xmlString += '</user>';
+
+            // Create XML document
+            var parser = new DOMParser();
+            var xmlDoc = parser.parseFromString(xmlString, 'application/xml');
+
+            // Send XML data to the server (you can customize the URL and method)
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/submit-xml', true);
+            xhr.setRequestHeader('Content-Type', 'application/xml');
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    alert('XML data sent successfully!');
+                }
+            };
+            xhr.send(new XMLSerializer().serializeToString(xmlDoc));
+        }
+    </script>
+</body>
+</html>
