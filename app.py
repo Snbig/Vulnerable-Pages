@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify, render_template, redirect
 from flask_cors import CORS, cross_origin
+import xml.etree.ElementTree as ET
 import xmlschema
 app = Flask(__name__, template_folder='.')
 
