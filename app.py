@@ -27,21 +27,19 @@ def delete_account(account_id):
 
 # ASVS 13.3.1
 @app.route('/submit-xml', methods=['GET', 'POST'])
-
-xsd_schema = """
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:element name="user">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element name="username" type="xs:string"/>
-        <xs:element name="email" type="xs:string"/>
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-</xs:schema>
-"""
-
 def checkXSD():
+    xsd_schema = """
+    <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="user">
+        <xs:complexType>
+        <xs:sequence>
+            <xs:element name="username" type="xs:string"/>
+            <xs:element name="email" type="xs:string"/>
+        </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    </xs:schema>
+    """
     error_message = None
 
     if request.method == 'POST':
