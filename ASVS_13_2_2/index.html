@@ -33,27 +33,29 @@
             };
 
             // Make a POST request to the Flask endpoint
-            fetch('https://spotless-frog-wetsuit.cyclic.cloud/submit-json', {
+            fetch('https://spotless-frog-wetsuit.cyclic.cloud/process_data', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(jsonData),
             })
-            .then(response => {
-                if (response.ok) {
-                    return response.json();
+            .then(response => response.json().then(data => ({
+                status: response.status,
+                data: data
+            })))
+            .then(result => {
+                if (result.status === 200) {
+                    // Display the result
+                    document.getElementById('result').innerText = JSON.stringify(result.data, null, 2);
                 } else {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
+                    // Display validation error message
+                    document.getElementById('result').innerText = `Error: ${result.data.message}`;
                 }
             })
-            .then(data => {
-                // Display the result
-                document.getElementById('result').innerText = JSON.stringify(data, null, 2);
-            })
             .catch(error => {
-                // Display validation error message
-                document.getElementById('result').innerText = `Error: ${error.message}`;
+                console.error('Error:', error);
+                document.getElementById('result').innerText = 'An unexpected error occurred.';
             });
         }
     </script>
