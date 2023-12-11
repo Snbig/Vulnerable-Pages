@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Send XML Data</title>
+    <style>
+        .error-message {
+            color: red;
+        }
+    </style>
 </head>
 <body>
     <h1>Send Username and Email in XML</h1>
@@ -17,6 +22,8 @@
 
         <button type="button" onclick="sendXML()">Send XML</button>
     </form>
+
+    <div id="result"></div>
 
     <script>
         function sendXML() {
@@ -39,11 +46,25 @@
             xhr.open('POST', 'https://spotless-frog-wetsuit.cyclic.cloud/submit-xml', true);
             xhr.setRequestHeader('Content-Type', 'application/xml');
             xhr.onreadystatechange = function() {
-                if (xhr.readyState == 4 && xhr.status == 200) {
-                    alert('XML data validated successfully!');
+                if (xhr.readyState == 4) {
+                    if (xhr.status == 200) {
+                        alert('XML data validated successfully!');
+                    } else {
+                        handleErrorResponse(xhr.responseText);
+                    }
                 }
             };
             xhr.send(new XMLSerializer().serializeToString(xmlDoc));
+        }
+
+        function handleErrorResponse(responseText) {
+            // Display the error message in the 'result' div
+            var resultDiv = document.getElementById('result');
+            
+            resultDiv.innerHTML = ''; // Clear existing content
+            var textNode = document.createTextNode('Error: ' + responseText);
+            resultDiv.appendChild(textNode);
+            resultDiv.classList.add('error-message');
         }
     </script>
 </body>
