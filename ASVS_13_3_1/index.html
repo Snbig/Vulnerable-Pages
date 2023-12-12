@@ -25,6 +25,24 @@
 
     <div id="result"></div>
 
+    <div id="XSD_schema"><pre>
+        &lt;xs:element name="user"&gt;
+            &lt;xs:complexType&gt;
+                &lt;xs:sequence&gt;
+                    &lt;xs:element name="username" type="xs:string"/&gt;
+                    &lt;xs:element name="email"&gt;
+                        &lt;xs:simpleType&gt;
+                            &lt;xs:restriction base="xs:string"&gt;
+                                &lt;!-- Add a pattern for email validation --&gt;
+                                &lt;xs:pattern value="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"/&gt;
+                            &lt;/xs:restriction&gt;
+                        &lt;/xs:simpleType&gt;
+                    &lt;/xs:element&gt;
+                &lt;/xs:sequence&gt;
+            &lt;/xs:complexType&gt;
+        &lt;/xs:element&gt;
+    </pre></div>
+
     <script>
         function sendXML() {
             // Get values from form
