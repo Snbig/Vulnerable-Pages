@@ -89,7 +89,7 @@ def checkJSONSchema():
     "type": "object",
     "properties": {
         "name": {"type": "string"},
-        "age": {"type": "integer", "minimum": 0}
+        "age": {"type": "integer", "minimum": 0, "maximum": 150}
     },
     "required": ["name", "age"]
     }
