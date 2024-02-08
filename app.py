@@ -117,7 +117,7 @@ def checkJSONSchema():
 @app.route('/upload', methods=['POST'])
 @cross_origin(origins=['https://snbig.github.io'], methods=['POST'])
 def upload_file():
-    MAX_FILE_SIZE_BYTES = 10 * 1024 # 1 MB
+    MAX_FILE_SIZE_BYTES = 1 * 1024 * 1024  # 1 MB
     try:
         # Check if file is present in the request
         if 'file' not in request.files:
