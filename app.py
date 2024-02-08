@@ -131,7 +131,7 @@ def upload_file():
         
         # Check file size during upload
         if request.content_length > MAX_FILE_SIZE_BYTES:
-            raise RequestEntityTooLarge('File size exceeds the maximum allowed size')
+            raise RequestEntityTooLarge(f'File size ({request.content_length / 1024 / 1024} MB) exceeds the maximum allowed size ({MAX_FILE_SIZE_BYTES} bytes)')
         
         # Save the file to disk or perform further processing
         return jsonify({'message': 'File uploaded successfully'}), 200
