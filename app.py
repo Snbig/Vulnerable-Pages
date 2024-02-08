@@ -18,6 +18,7 @@ def protected_route():
         response = jsonify({'message': 'Forbidden. Bad Origin.'})
         return response, 403
 
+
 # ASVS 14.5.3
 @app.route('/accounts/<account_id>', methods=['DELETE'])
 @cross_origin(send_wildcard=True, methods=['DELETE'])
@@ -27,6 +28,7 @@ def delete_account(account_id):
         return jsonify({'message': f'Account {account_id} successfully deleted'}), 204
     else:
         return jsonify({'error': 'Account not found'}), 404
+
 
 # ASVS 13.3.1
 @app.route('/submit-xml', methods=['GET', 'POST'])
@@ -108,6 +110,36 @@ def checkJSONSchema():
         # Handle validation errors
         error_message = f"Invalid input. {e.message}"
         return jsonify({"status": "error", "message": error_message}), 400
+
+
+# ASVS 12.1.1
+@app.route('/upload', methods=['POST'])
+@cross_origin(origins=['https://snbig.github.io'], methods=['POST'])
+def upload_file():
+    MAX_FILE_SIZE_BYTES = 10 * 1024 # 1 MB
+    try:
+        # Check if file is present in the request
+        if 'file' not in request.files:
+            return jsonify({'error': 'No file part'}), 400
+        
+        file = request.files['file']
+        
+        # Check if file is empty
+        if file.filename == '':
+            return jsonify({'error': 'No selected file'}), 400
+        
+        # Check file size during upload
+        if request.content_length > MAX_FILE_SIZE_BYTES:
+            raise RequestEntityTooLarge('File size exceeds the maximum allowed size')
+        
+        # Save the file to disk or perform further processing
+        return jsonify({'message': 'File uploaded successfully'}), 200
+    
+    except RequestEntityTooLarge as e:
+        return jsonify({'error': str(e)}), 413
+    
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 
 @app.route('/')
