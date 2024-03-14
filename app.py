@@ -142,7 +142,7 @@ def upload_file():
         
         # Save the file to disk or perform further processing
         if file and allowed_file(file.filename):
-            if filename.rsplit('.', 1)[1].lower() == 'zip':
+            if file.filename.rsplit('.', 1)[1].lower() == 'zip':
                   file_in_memory = BytesIO(file.read())
                   # Open the ZIP file from the in-memory stream
                   try:
