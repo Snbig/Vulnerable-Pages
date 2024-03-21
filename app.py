@@ -4,9 +4,8 @@ from flask_cors import CORS, cross_origin
 import xml.etree.ElementTree as ET
 import xmlschema
 from jsonschema import validate, ValidationError
-import zipfile
+import uuid
 import pyzipper
-import Libs.zipfile as vulnerable_zipfile
 from io import BytesIO
 
 app = Flask(__name__, template_folder='.')
@@ -145,8 +144,15 @@ def upload_file():
         # Save the file to disk or perform further processing
         if file and allowed_file(file.filename):
             if file.filename.rsplit('.', 1)[1].lower() == 'zip':
+                  tmp_folder = f'/tmp/{str(uuid.uuid4())}/'
                   file_in_memory = BytesIO(file.read())
                   # Open the ZIP file from the in-memory stream
+                  @after_this_request
+                  def remove_file(response):
+                    try:
+                        os.rmdir(tmp_folder)
+                    except Exception as error:
+                        app.logger.error("Error removing /tmp/ folder", error)
                   try:
                     with pyzipper.AESZipFile(file_in_memory, 'r') as zip_ref:
                       # Process the ZIP file contents here (e.g., iterate through files, extract specific files)
