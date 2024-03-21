@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, render_template, redirect
+from flask import Flask, request, jsonify, render_template, redirect, after_this_request
 from werkzeug.exceptions import RequestEntityTooLarge
 from flask_cors import CORS, cross_origin
 import xml.etree.ElementTree as ET
