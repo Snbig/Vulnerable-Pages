@@ -147,12 +147,6 @@ def upload_file():
                   tmp_folder = f'/tmp/{str(uuid.uuid4())}/'
                   file_in_memory = BytesIO(file.read())
                   # Open the ZIP file from the in-memory stream
-                  @after_this_request
-                  def remove_file(response):
-                    try:
-                        os.rmdir(tmp_folder)
-                    except Exception as error:
-                        pass
                   try:
                     with pyzipper.AESZipFile(file_in_memory, 'r') as zip_ref:
                       # Process the ZIP file contents here (e.g., iterate through files, extract specific files)
@@ -161,6 +155,13 @@ def upload_file():
                       zip_ref.extractall(path=tmp_folder)
                       return jsonify(content), 200
                   except Exception as e:
+                    @after_this_request
+                    def remove_file(response):
+                        try:
+                            os.rmdir(tmp_folder)
+                            return response
+                        except Exception as error:
+                            pass
                     return jsonify({'error': f'Error processing ZIP file: {str(e)}'}), 500
             else:
                 return jsonify({'message': 'File uploaded successfully'}), 200
