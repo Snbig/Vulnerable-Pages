@@ -12,3 +12,4 @@ Werkzeug
 flask-cors
 xmlschema
 jsonschema
+pyzipper
