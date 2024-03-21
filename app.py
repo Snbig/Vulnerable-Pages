@@ -152,13 +152,13 @@ def upload_file():
                     try:
                         os.rmdir(tmp_folder)
                     except Exception as error:
-                        app.logger.error("Error removing /tmp/ folder", error)
+                        pass
                   try:
                     with pyzipper.AESZipFile(file_in_memory, 'r') as zip_ref:
                       # Process the ZIP file contents here (e.g., iterate through files, extract specific files)
                       file_names = zip_ref.namelist()
                       content = {'files': file_names}
-                      zip_ref.extractall(path='/tmp')
+                      zip_ref.extractall(path=tmp_folder)
                       return jsonify(content), 200
                   except Exception as e:
                     return jsonify({'error': f'Error processing ZIP file: {str(e)}'}), 500
