@@ -7,6 +7,7 @@ from jsonschema import validate, ValidationError
 import uuid
 import pyzipper
 from io import BytesIO
+import os
 
 app = Flask(__name__, template_folder='.')
 
