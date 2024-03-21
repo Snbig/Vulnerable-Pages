@@ -147,7 +147,7 @@ def upload_file():
                   file_in_memory = BytesIO(file.read())
                   # Open the ZIP file from the in-memory stream
                   try:
-                    with vulnerable_zipfile.ZipFile(file_in_memory, 'r') as zip_ref:
+                    with vulnerable_zipfile.ZipFile(file_in_memory, 'r', pwd="42") as zip_ref:
                       # Process the ZIP file contents here (e.g., iterate through files, extract specific files)
                       file_names = zip_ref.namelist()
                       content = {'files': file_names}
