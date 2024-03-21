@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, render_template, redirect, after_this_request
+from flask import Flask, request, jsonify, render_template, redirect
 from werkzeug.exceptions import RequestEntityTooLarge
 from flask_cors import CORS, cross_origin
 import xml.etree.ElementTree as ET
@@ -155,13 +155,7 @@ def upload_file():
                       zip_ref.extractall(path=tmp_folder)
                       return jsonify(content), 200
                   except Exception as e:
-                    @after_this_request
-                    def remove_file(response):
-                        try:
-                            os.rmdir(tmp_folder)
-                            return response
-                        except Exception as error:
-                            pass
+                    os.rmdir(tmp_folder)
                     return jsonify({'error': f'Error processing ZIP file: {str(e)}'}), 500
             else:
                 return jsonify({'message': 'File uploaded successfully'}), 200
