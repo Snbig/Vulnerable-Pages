@@ -7,7 +7,7 @@ from jsonschema import validate, ValidationError
 import uuid
 import pyzipper
 from io import BytesIO
-import os
+import shutil
 
 app = Flask(__name__, template_folder='.')
 
@@ -156,7 +156,7 @@ def upload_file():
                       zip_ref.extractall(path=tmp_folder)
                       return jsonify(content), 200
                   except Exception as e:
-                    os.rmdir(tmp_folder)
+                    shutil.rmtree(tmp_folder)
                     return jsonify({'error': f'Error processing ZIP file: {str(e)}'}), 500
             else:
                 return jsonify({'message': 'File uploaded successfully'}), 200
