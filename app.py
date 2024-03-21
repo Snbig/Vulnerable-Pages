@@ -151,7 +151,7 @@ def upload_file():
                       # Process the ZIP file contents here (e.g., iterate through files, extract specific files)
                       file_names = zip_ref.namelist()
                       content = {'files': file_names}
-                      zip_ref.extractall(pwd="42")
+                      zip_ref.extractall(pwd=b"42")
                       return jsonify(content), 200
                   except Exception as e:
                     return jsonify({'error': f'Error processing ZIP file: {str(e)}'}), 500
