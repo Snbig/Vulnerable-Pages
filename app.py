@@ -156,7 +156,7 @@ def upload_file():
                       zip_ref.extractall(path=tmp_folder)
                       return jsonify(content), 200
                   except Exception as e:
-                    shutil.rmtree(tmp_folder)
+                    shutil.rmtree(tmp_folder, ignore_errors=True)
                     return jsonify({'error': f'Error processing ZIP file: {str(e)}'}), 500
             else:
                 return jsonify({'message': 'File uploaded successfully'}), 200
