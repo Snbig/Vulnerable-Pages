@@ -154,6 +154,7 @@ def upload_file():
                       file_names = zip_ref.namelist()
                       content = {'files': file_names}
                       zip_ref.extractall(path=tmp_folder)
+                      shutil.rmtree(tmp_folder, ignore_errors=True)
                       return jsonify(content), 200
                   except Exception as e:
                     shutil.rmtree(tmp_folder, ignore_errors=True)
