@@ -1,62 +1,34 @@
-name: Update README on Folder Creation
+name: Update README Table
 
 on:
   push:
-    branches:
-      - main
+    paths:
+      - '**/ASVS_[0-9]+_[0-9]+_[0-9]+'  # Trigger when a new folder is created or modified
 
 jobs:
-  update-readme:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
-      - name: List directory contents
+      - name: Generate Markdown table
         run: |
-          ls -R
-          ls -d ASVS_*/*
-          echo "Current directory: $(pwd)"
-
-      - name: Determine if directory structure changed
-        id: directory-changed
-        run: |
-          if [ "$(ls -d ASVS_*/* 2>/dev/null)" != "" ]; then
-            echo "Directory structure has changed."
-            echo "::set-output name=changed::true"
-          else
-            echo "No changes in directory structure."
-            echo "::set-output name=changed::false"
-          fi
-
-      - name: Generate Table and Update README
-        if: steps.directory-changed.outputs.changed == 'true'
-        run: |
-          table=""
-          for dir in ASVS_*/*; do
-              if [ -d "$dir" ]; then
-                  link=$(echo "$dir" | sed 's/\//%2F/g' | sed 's/ASVS_/https:\/\/snbig.github.io\/Vulnerable-Pages\/ASVS_/g')
-                  table+="| $(basename "$dir") | [ASVS Requirement]( $link ) |\n"
-              fi
+          folders=$(find . -type d -regex ".*/ASVS_[0-9]+_[0-9]+_[0-9]+")
+          echo "## ASVS Pages" >> README.md
+          echo "| ASVS Req. ID | Link |" >> README.md
+          echo "|---|---|" >> README.md
+          for folder in $folders; do
+            req_id=$(basename "$folder" | sed 's/ASVS_\([0-9]\+\).\([0-9]\+\).\([0-9]\+\)/ASVS \1.\2.\3/')
+            link="https://snbig.github.io/Vulnerable-Pages/${folder/.\//}"
+            echo "| $req_id | [$link]($link) |" >> README.md
           done
-          echo "Generated table:"
-          echo "$table"
-          echo "$table" > table.md
 
-          echo "Content of table.md:"
-          cat table.md
-
-          cat table.md >> README.md
-
-      - name: Show updated README
-        run: cat README.md
-
-      - name: Commit and push changes
-        if: steps.directory-changed.outputs.changed == 'true'
-        run: |
-          git config --global user.name 'GitHub Actions'
-          git config --global user.email 'actions@users.noreply.github.com'
-          git add README.md
-          git commit -m "Auto-update README with new folder information"
-          git push
+      - name: Commit changes
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Update README table
+          commit_user_name: GitHub Actions
+          commit_user_email: github-actions[bot]@users.noreply.github.com
+          branch: main  # Replace with your desired branch
+          file_pattern: README.md
