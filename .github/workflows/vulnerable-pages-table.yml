@@ -1,10 +1,9 @@
 name: Update README on Folder Creation
 
 on:
-  # Trigger the workflow on any push events
   push:
     branches:
-      - main  # Adjust this based on your default branch name
+      - main
 
 jobs:
   update-readme:
@@ -14,10 +13,15 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
+      - name: List directory contents
+        run: |
+          ls -R
+          ls -d ASVS_*/*
+          echo "Current directory: $(pwd)"
+
       - name: Determine if directory structure changed
         id: directory-changed
         run: |
-          # Check if any new directories match the specified pattern
           if [ "$(ls -d ASVS_*/* 2>/dev/null)" != "" ]; then
             echo "Directory structure has changed."
             echo "::set-output name=changed::true"
@@ -29,7 +33,6 @@ jobs:
       - name: Generate Table and Update README
         if: steps.directory-changed.outputs.changed == 'true'
         run: |
-          # Generate the Markdown table for the new directories
           table=""
           for dir in ASVS_*/*; do
               if [ -d "$dir" ]; then
@@ -37,10 +40,17 @@ jobs:
                   table+="| $(basename "$dir") | [ASVS Requirement]( $link ) |\n"
               fi
           done
+          echo "Generated table:"
+          echo "$table"
           echo "$table" > table.md
 
-          # Append the generated table to the README.md file
+          echo "Content of table.md:"
+          cat table.md
+
           cat table.md >> README.md
+
+      - name: Show updated README
+        run: cat README.md
 
       - name: Commit and push changes
         if: steps.directory-changed.outputs.changed == 'true'
