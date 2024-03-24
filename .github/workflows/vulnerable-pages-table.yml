@@ -13,7 +13,7 @@ jobs:
       - name: Generate Markdown table
         run: |
           folders=$(find . -type d -regex ".*/ASVS_[0-9]+_[0-9]+_[0-9]+")
-          echo "## ASVS Pages" >> README.md
+          echo "## ASVS Pages\n" >> README.md
           echo "| ASVS Req. ID | Link |" >> README.md
           echo "|---|---|" >> README.md
           for folder in $folders; do
