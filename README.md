@@ -5,3 +5,4 @@ Intentionally Vulnerable Static Pages for https://github.com/OWASP/www-project-a
 
 🌐 https://snbig.github.io/Vulnerable-Pages/
 
+
