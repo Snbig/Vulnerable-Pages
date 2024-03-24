@@ -2,8 +2,6 @@ name: Update README Table
 
 on:
   push:
-    paths:
-      - '**/ASVS_[0-9]+_[0-9]+_[0-9]+'  # Trigger when a new folder is created or modified
 
 jobs:
   build:
