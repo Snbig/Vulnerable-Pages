@@ -1,13 +1,10 @@
 name: Update README on Folder Creation
 
 on:
-  create:
+  # Trigger the workflow on any push events
+  push:
     branches:
       - main  # Adjust this based on your default branch name
-  # You might need to adjust the 'paths' pattern to match your folder structure
-  # This example assumes all new directories follow the pattern ASVS_\d_\d_\d
-  paths:
-    - 'ASVS_*/*'
 
 jobs:
   update-readme:
@@ -17,10 +14,22 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Generate Table
-        id: generate-table
+      - name: Determine if directory structure changed
+        id: directory-changed
         run: |
-          # Find all directories matching the pattern and generate the table
+          # Check if any new directories match the specified pattern
+          if [ "$(ls -d ASVS_*/* 2>/dev/null)" != "" ]; then
+            echo "Directory structure has changed."
+            echo "::set-output name=changed::true"
+          else
+            echo "No changes in directory structure."
+            echo "::set-output name=changed::false"
+          fi
+
+      - name: Generate Table and Update README
+        if: steps.directory-changed.outputs.changed == 'true'
+        run: |
+          # Generate the Markdown table for the new directories
           table=""
           for dir in ASVS_*/*; do
               if [ -d "$dir" ]; then
@@ -30,12 +39,11 @@ jobs:
           done
           echo "$table" > table.md
 
-      - name: Append Table to README
-        run: |
           # Append the generated table to the README.md file
           cat table.md >> README.md
 
       - name: Commit and push changes
+        if: steps.directory-changed.outputs.changed == 'true'
         run: |
           git config --global user.name 'GitHub Actions'
           git config --global user.email 'actions@users.noreply.github.com'
