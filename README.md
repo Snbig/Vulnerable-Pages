@@ -4,3 +4,4 @@ Intentionally Vulnerable Static Pages for https://github.com/OWASP/www-project-a
 !ASISVS_TABLE!
 
 🌐 https://snbig.github.io/Vulnerable-Pages/
+
