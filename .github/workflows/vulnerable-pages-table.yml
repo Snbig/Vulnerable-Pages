@@ -23,8 +23,8 @@ jobs:
           content=""
           for folder in $folders; do
             id=$(basename "$folder")
-            link="https://snbig.github.io/Vulnerable-Pages/$id/"
-            content="$content| $id | [$id]($link) |"  # Removed extra newlines
+            link='https://snbig.github.io/Vulnerable-Pages/$id/'
+            content='$content| $id | [$id]($link) |'  # Removed extra newlines
           done
           echo ::set-output name=content::"$content"
 
