@@ -14,7 +14,7 @@ jobs:
       - name: Get list of ASVS folders
         id: folders
         run: |
-          find . -type d -name 'ASVS_[0-9][0-9][0-9]' | sort
+          find . -type d -name 'ASVS_[0-9]_[0-9]_[0-9]' | sort
 
       - name: Parse folder names and generate table content
         id: table_content
