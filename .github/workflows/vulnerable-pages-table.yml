@@ -22,7 +22,7 @@ jobs:
           folders=$(echo ${{ steps.folders.outputs }})
           content=""
           for folder in $folders; do
-            id=$(basename '$folder')
+            id=$(basename $folder)
             echo $id
             link='https://snbig.github.io/Vulnerable-Pages/$id/'
             content='$content| $id | [$id]($link) |'  # Removed extra newlines
