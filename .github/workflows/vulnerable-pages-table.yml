@@ -19,7 +19,8 @@ jobs:
       - name: Parse folder names and generate table content
         id: table_content
         run: |
-          folders=$(echo ${{ steps.folders.outputs }})
+          folders=$(echo ${{ steps.folders.outputs.stdout }})
+          echo $folders
           content=""
           for folder in $folders; do
             id=$(basename $folder)
