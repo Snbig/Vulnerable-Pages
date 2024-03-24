@@ -1,48 +1,44 @@
-name: Update README with new ASVS folder
+name: Update README on Folder Creation
 
 on:
-  push:
-    branches: [ main ]
+  create:
+    branches:
+      - main  # Adjust this based on your default branch name
+  # You might need to adjust the 'paths' pattern to match your folder structure
+  # This example assumes all new directories follow the pattern ASVS_\d_\d_\d
+  paths:
+    - 'ASVS_*/*'
 
 jobs:
   update-readme:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-      - name: Get list of ASVS folders
-        id: folders
+      - name: Generate Table
+        id: generate-table
         run: |
-          find . -type d | grep -E 'ASVS_[0-9]+_[0-9]+_[0-9]+' | sort
-
-      - name: Parse folder names and generate table content
-        id: table_content
-        run: |
-          folders=$(echo ${{ steps.folders.outputs.stdout }})
-          echo $folders
-          content=""
-          for folder in $folders; do
-            id=$(basename $folder)
-            echo $id
-            link="https://snbig.github.io/Vulnerable-Pages/$id/"
-            content="$content| $id | [$id]($link) |"  # Removed extra newlines
+          # Find all directories matching the pattern and generate the table
+          table=""
+          for dir in ASVS_*/*; do
+              if [ -d "$dir" ]; then
+                  link=$(echo "$dir" | sed 's/\//%2F/g' | sed 's/ASVS_/https:\/\/snbig.github.io\/Vulnerable-Pages\/ASVS_/g')
+                  table+="| $(basename "$dir") | [ASVS Requirement]( $link ) |\n"
+              fi
           done
-          echo ::set-output name=content::"$content"
+          echo "$table" > table.md
 
-      - name: Update README with table
+      - name: Append Table to README
         run: |
-          folders=$(echo ${{ steps.table_content.outputs.content }})
-          echo $folders
-          pattern="!ASISVS_TABLE!"
-          replacement='## ASVS Requirements\n\n| ASVS Req. ID | Link |\n|---|---|'
-          for folder in $folders; do
-            id=$(basename $folder)
-            echo $id
-            link="https://snbig.github.io/Vulnerable-Pages/$id/"
-            echo $link
-            replacement="$replacement\n| $id | [$id]($link) |"
-          done
-          replacement="$replacement\n"
-          sed -i "s/$pattern/$replacement/" README.md
+          # Append the generated table to the README.md file
+          cat table.md >> README.md
 
+      - name: Commit and push changes
+        run: |
+          git config --global user.name 'GitHub Actions'
+          git config --global user.email 'actions@users.noreply.github.com'
+          git add README.md
+          git commit -m "Auto-update README with new folder information"
+          git push
