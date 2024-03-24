@@ -31,7 +31,7 @@ jobs:
 
       - name: Update README with table
         run: |
-          folders=$(echo ${{ steps.folders.outputs.content }})
+          folders=$(echo ${{ steps.table_content.outputs.content }})
           pattern="!ASISVS_TABLE!"
           replacement="## ASVS Requirements\n\n| ASVS Req. ID | Link |\n|---|---|"
           for folder in $folders; do
