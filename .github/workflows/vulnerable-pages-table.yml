@@ -26,6 +26,7 @@ jobs:
             link="https://snbig.github.io/Vulnerable-Pages/$id/"
             content="$content| $id | [$id]($link) |"  # Removed extra newlines
           done
+          echo $content
           echo ::set-output name=content::"$content"
 
       - name: Update README with table
