@@ -11,9 +11,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Install jq
-        run: sudo apt-get install jq -y
-
       - name: Get list of ASVS folders
         id: folders
         run: |
@@ -27,7 +24,7 @@ jobs:
           for folder in $folders; do
             id=$(basename "$folder")
             link="https://snbig.github.io/Vulnerable-Pages/$id/"
-            content="$content\n| $id | [$id]($link) |"
+            content="$content| $id | [$id]($link) |"  # Removed extra newlines
           done
           echo ::set-output name=content::"$content"
 
@@ -36,4 +33,4 @@ jobs:
           table_content=${{ steps.table_content.outputs.content }}
           pattern="!ASISVS_TABLE!"
           replacement="## ASVS Requirements\n\n| ASVS Req. ID | Link |\n|---|---|${table_content}\n"
-           sed -i "s/$pattern/$replacement/" README.md
+          sed -i "s/$pattern/$replacement/" README.md
