@@ -30,7 +30,14 @@ jobs:
 
       - name: Update README with table
         run: |
-          table_content=${{ steps.table_content.outputs.content }}
+          folders=$(echo ${{ steps.folders.outputs.content }})
           pattern="!ASISVS_TABLE!"
-          replacement="## ASVS Requirements\n\n| ASVS Req. ID | Link |\n|---|---|${table_content}\n"
+          replacement="## ASVS Requirements\n\n| ASVS Req. ID | Link |\n|---|---|"
+          for folder in $folders; do
+            id=$(basename "$folder")
+            link="https://snbig.github.io/Vulnerable-Pages/$id/"
+            replacement="$replacement\n| $id | [$id]($link) |"
+          done
+          replacement="$replacement\n"
           sed -i "s/$pattern/$replacement/" README.md
+
