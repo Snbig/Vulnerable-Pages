@@ -1,4 +1,4 @@
-name: Update README with new ASVS Vulnerable Page
+name: Update README with new ASVS folder
 
 on:
   push:
@@ -32,14 +32,8 @@ jobs:
           echo ::set-output name=content::"$content"
 
       - name: Update README with table
-        uses: seborama/update-readme@v2
-        with:
-          path: README.md
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          pattern: "!ASISVS_TABLE!"
-          replacement: |-
-            ## ASVS Requirements
-
-            | ASVS Req. ID | Link |
-            |---|---|
-            ${{ steps.table_content.outputs.content }}
+        run: |
+          table_content=${{ steps.table_content.outputs.content }}
+          pattern="!ASISVS_TABLE!"
+          replacement="## ASVS Requirements\n\n| ASVS Req. ID | Link |\n|---|---|${table_content}\n"
+           sed -i "s/$pattern/$replacement/" README.md
