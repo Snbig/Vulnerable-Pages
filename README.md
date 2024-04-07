@@ -1,6 +1,3 @@
-# Vulnerable-Pages
-Intentionally Vulnerable Static Pages for https://github.com/OWASP/www-project-asvs-security-evaluation-templates-with-nuclei Project.
-
 ## ASVS Pages
 | ASVS Req. ID | Link |
 |---|---|
@@ -9,6 +6,7 @@ Intentionally Vulnerable Static Pages for https://github.com/OWASP/www-project-a
 | ASVS 14.5.3 | [https://snbig.github.io/Vulnerable-Pages/ASVS_14_5_3](https://snbig.github.io/Vulnerable-Pages/ASVS_14_5_3) |
 | ASVS 12.1.3 | [https://snbig.github.io/Vulnerable-Pages/ASVS_12_1_3](https://snbig.github.io/Vulnerable-Pages/ASVS_12_1_3) |
 | ASVS 1.2.3 | [https://snbig.github.io/Vulnerable-Pages/ASVS_1_2_3](https://snbig.github.io/Vulnerable-Pages/ASVS_1_2_3) |
+| ASVS 0.0.0 | [https://snbig.github.io/Vulnerable-Pages/ASVS_0_0_0](https://snbig.github.io/Vulnerable-Pages/ASVS_0_0_0) |
 | ASVS 12.1.1 | [https://snbig.github.io/Vulnerable-Pages/ASVS_12_1_1](https://snbig.github.io/Vulnerable-Pages/ASVS_12_1_1) |
 | ASVS 13.3.1 | [https://snbig.github.io/Vulnerable-Pages/ASVS_13_3_1](https://snbig.github.io/Vulnerable-Pages/ASVS_13_3_1) |
 
