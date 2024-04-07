@@ -13,7 +13,6 @@ jobs:
 
       - name: Read existing table (optional)
         run: |
-          set +e
           existing_table=$(cat README.md | grep -E '^## ASVS Pages| ASVS Req\. ID \| Link \|$\n')
           if [[ ! -z "$existing_table" ]]; then
             echo "Existing table found. Updating..."
