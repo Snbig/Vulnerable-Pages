@@ -33,7 +33,7 @@ jobs:
             echo "## ASVS Pages" >> README.md
             echo "| ASVS Req. ID | Link |" >> README.md
             echo "|---|---|" >> README.md
-            echo "$content" >> README.md
+            echo -e "$content" >> README.md
           else
             echo "$existing_table" | grep -Ev '^## ASVS Pages\n' | head -n -2 >> README.md.tmp
             echo -e "$content" >> README.md.tmp
