@@ -13,6 +13,7 @@ jobs:
 
       - name: Read existing table (optional)
         run: |
+          set +e
           existing_table=$(cat README.md | grep -E '^## ASVS Pages| ASVS Req\. ID \| Link \|$\n')
           if [[ ! -z "$existing_table" ]]; then
             echo "Existing table found. Updating..."
@@ -20,6 +21,7 @@ jobs:
             echo "No existing table found. Creating new table..."
           fi
           folders=$(find . -type d -regex ".*/ASVS_[0-9]+_[0-9]+_[0-9]+")
+          echo $folders
           content=""
           for folder in $folders; do
             req_id=$(basename "$folder" | sed 's/ASVS_\([0-9]\+\).\([0-9]\+\).\([0-9]\+\)/ASVS \1.\2.\3/')
