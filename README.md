@@ -19,3 +19,7 @@ Intentionally Vulnerable Static Pages for https://github.com/OWASP/www-project-a
 | ASVS 13.3.1 | [https://snbig.github.io/Vulnerable-Pages/ASVS_13_3_1](https://snbig.github.io/Vulnerable-Pages/ASVS_13_3_1) |
 | ASVS 1.1.1 | [https://snbig.github.io/Vulnerable-Pages/ASVS_1_1_1](https://snbig.github.io/Vulnerable-Pages/ASVS_1_1_1) |
 | ASVS 14.5.3 | [https://snbig.github.io/Vulnerable-Pages/ASVS_14_5_3](https://snbig.github.io/Vulnerable-Pages/ASVS_14_5_3) |
+## ASVS Pages
+| ASVS Req. ID | Link |
+|---|---|
+
