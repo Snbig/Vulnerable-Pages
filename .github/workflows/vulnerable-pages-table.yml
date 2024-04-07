@@ -20,11 +20,6 @@ jobs:
           else
             echo "No existing table found. Creating new table..."
           fi
-        # Optional: Remove existing table content if found (uncomment next line)
-          # echo "$existing_table" | grep -Ev '^## ASVS Pages\n.*\| ASVS Req\. ID \| Link \|$\n' > README.md.tmp && mv README.md.tmp README.md
-
-      - name: Generate Markdown table content
-        run: |
           folders=$(find . -type d -regex ".*/ASVS_[0-9]+_[0-9]+_[0-9]+")
           content=""
           for folder in $folders; do
@@ -32,9 +27,6 @@ jobs:
             link="https://snbig.github.io/Vulnerable-Pages/${folder/.\//}"
             content+="| $req_id | [$link]($link) |\n"
           done
-
-      - name: Update README table
-        run: |
           # Append table content if no existing table found, otherwise replace the existing table content
           if [[ -z "$existing_table" ]]; then
             echo "## ASVS Pages" >> README.md
