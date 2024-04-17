@@ -8,6 +8,8 @@ import uuid
 import pyzipper
 from io import BytesIO
 import shutil
+import urllib
+from urllib.parse import urlparse
 
 app = Flask(__name__, template_folder='.')
 
@@ -170,6 +172,104 @@ def upload_file():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
+# ASVS 12.6.1
+@app.route('/admin', methods=['GET'])
+def admin():
+    if request.remote_addr == '127.0.0.1' or request.remote_addr == 'localhost':
+        return 'Welcom to Admin Panel'
+    else:
+        return 'Access denied. This route is only accessible locally.'
+
+@app.route('/ssrf/<id>', methods=['POST','GET'])
+@cross_origin(origins=['https://snbig.github.io'], methods=['POST'])
+
+def ssrf(id):
+
+    WHITELIST = ('oast.pro', 'oast.live', 'oast.site', 'oast.online', 'oast.fun', 'oast.me','google.com')
+
+    if id == '1' and request.method == 'POST':
+
+        url = request.json.get('url', '')
+        if url:
+            try:
+                schema = urlparse(url).scheme
+                path = urlparse(url).path
+                if schema.lower() == "file":
+                    if path == "/etc/passwd":
+                        with open('./static/etc.txt', 'r') as file:
+                            etc = file.read()
+                        return etc
+                    else:
+                        return jsonify({"error":"Forbidden Path"}), 403
+                else:
+                    return jsonify({"error":"Just 'file' schema is allowed."}), 403       
+            except Exception as e:
+                return str(e), 500
+
+        return jsonify({"error":"Bad URL"}), 400
+    
+    elif id == '2' :
+        try:
+
+            url = request.json.get('url', '')
+            if url:
+                schema = urlparse(url).scheme
+                hostname = urlparse(url).hostname
+                
+                if schema.lower() in ['http', 'https']:
+                    
+                    if hostname:
+                        
+                        if hostname.endswith(WHITELIST):
+                            response = requests.get(url).text
+                            return response
+                    
+                        else:
+                           return jsonify({"error": "forbidden hostname", "allowed hostnames": WHITELIST}) , 403
+                    
+                    else:
+                        return jsonify({"error": "Enter a valid hostname"})
+                
+                else:
+                    return jsonify({"error": "Just 'http' or 'https' schemas are allowed."})
+                
+            else:
+                return jsonify({"error": "Enter a valid URL."})
+                
+        except Exception as e:
+            return str(e), 500
+        
+
+    elif id == '3':
+        try:
+            url =request.json.get('url', '')
+            if url:
+                schema = urlparse(url).scheme
+                hostname = urlparse(url).hostname
+                port = urlparse(url).port
+
+                if schema.lower() in ['http', 'https']:
+                    
+                    if hostname and port:
+                        if hostname in ['127.1', '017700000001', '2130706433']:
+                            response = urllib.request.urlopen(url).read().decode('utf-8')
+                            return response
+                        else:
+                           return jsonify({"error": "forbidden HOSTNAME"}) , 403
+                        
+                    else:
+                        return jsonify({"error": "Enter a valid hostname or port"})
+                else:
+                    return jsonify({"error": "Just 'http' or 'https' schemas are allowed."})
+            else:
+                return jsonify({"error": "Enter a valid URL."})
+                
+        except Exception as e:
+            return str(e), 500
+
+    
+    else:
+        return jsonify({"error":"Route Not Found"}), 404
 
 @app.route('/')
 def redirectToGitPage():
