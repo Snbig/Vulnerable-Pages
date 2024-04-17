@@ -13,3 +13,4 @@ flask-cors
 xmlschema
 jsonschema
 pyzipper
+requests
