@@ -247,16 +247,17 @@ def ssrf(id):
             if url:
                 schema = urlparse(url).scheme
                 hostname = urlparse(url).hostname
+                path = urlparse(url).path
                 port = urlparse(url).port
 
                 if schema.lower() in ['http', 'https']:
                     
-                    if hostname and port:
-                        if hostname in ['127.1', '017700000001', '2130706433']:
-                            response = urllib.request.urlopen(url).read().decode('utf-8')
-                            return response
+                    if hostname:
+                        if hostname in ['127.1', '017700000001', '2130706433'] and path == '/admin' and not port :
+                            return 'Welcom to Admin Panel'
+                        
                         else:
-                           return jsonify({"error": "forbidden HOSTNAME"}) , 403
+                           return jsonify({"error": "forbidden PORT, PATH or HOSTNAME"}) , 403
                         
                     else:
                         return jsonify({"error": "Enter a valid hostname or port"})
