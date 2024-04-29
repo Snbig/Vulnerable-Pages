@@ -12,11 +12,11 @@
 <div class="container">
     <h2>SSRF ASVS</h2>
     <div class="btn-container">
-        <button class="btn btn-first" onclick="set_payload('https://spotless-frog-wetsuit.cyclic.cloud/ssrf/1','file:///etc/passwd')">File Schema</button>
-        <button class="btn btn-second" onclick="set_payload('https://spotless-frog-wetsuit.cyclic.cloud/ssrf/2','http://google.com')">HTTP Schema</button>
-        <button class="btn btn-third" onclick="set_payload('https://spotless-frog-wetsuit.cyclic.cloud/ssrf/2','http://ssrf.ir@google.com')">@ Bypass</button>
-        <button class="btn btn-forth" onclick="set_payload('https://spotless-frog-wetsuit.cyclic.cloud/ssrf/2', 'http://google.com#ssrf.ir')"># Bypass</button>
-        <button class="btn btn-fifth" onclick="set_payload('https://spotless-frog-wetsuit.cyclic.cloud/ssrf/3','http://127.1/admin')">Accessing Local Page</button>
+        <button class="btn btn-first" onclick="set_payload('https://vulnerable-pages.onrender.com/ssrf/1','file:///etc/passwd')">File Schema</button>
+        <button class="btn btn-second" onclick="set_payload('https://vulnerable-pages.onrender.com/ssrf/2','http://google.com')">HTTP Schema</button>
+        <button class="btn btn-third" onclick="set_payload('https://vulnerable-pages.onrender.com/ssrf/2','http://ssrf.ir@google.com')">@ Bypass</button>
+        <button class="btn btn-forth" onclick="set_payload('https://vulnerable-pages.onrender.com/ssrf/2', 'http://google.com#ssrf.ir')"># Bypass</button>
+        <button class="btn btn-fifth" onclick="set_payload('https://vulnerable-pages.onrender.com/ssrf/3','http://127.1/admin')">Accessing Local Page</button>
     </div>
     <div class="input-wrapper">
         <br>
