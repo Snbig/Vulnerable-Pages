@@ -274,13 +274,13 @@ def ssrf(id):
         return jsonify({"error":"Route Not Found"}), 404
 
 @app.route('/redirect', methods=['GET'])
-def redirect():
+def open_redirect():
     try:
         redirect_url = request.args.get('url')
         if redirect_url:
             return redirect(redirect_url, code=302)
         else:
-            return jsonify({"error":"url param is required"}), 404
+            return jsonify({"error":"url param is required"}), 400
     except Exception as e:
         return str(e), 500
         
