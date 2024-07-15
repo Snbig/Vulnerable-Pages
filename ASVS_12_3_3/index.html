@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Remote File Inclusion</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #2b2b2b;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: #ffffff;
+  }
+  .container {
+    background-color: #3e3e3e;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    max-width: 400px;
+    width: 100%;
+  }
+  h1 {
+    text-align: center;
+    color: #ffffff;
+  }
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+  label {
+    margin-bottom: 8px;
+    color: #ffffff;
+  }
+  input[type="text"] {
+    padding: 10px;
+    border: 1px solid #7374d3;
+    border-radius: 4px;
+    margin-bottom: 16px;
+    font-size: 16px;
+    background-color: #4e4e4e;
+    color: #ffffff;
+  }
+  input[type="submit"] {
+    background-color: #7374d3;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  input[type="submit"]:hover {
+    background-color: #5a5a8c;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Remote File Inclusion</h1>
+  <form action="https://vulnerable-pages.onrender.com/rfi" method="GET">
+    <label for="url">URL:</label>
+    <input type="text" id="url" name="url" placeholder="Enter URL..." value="https://yahoo.com">
+    <input type="submit" value="Submit">
+  </form>
+</div>
+
+</body>
+</html>
