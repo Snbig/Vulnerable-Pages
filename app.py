@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, render_template, redirect
+from flask import Flask, request, jsonify, render_template, redirect, render_template_string
 from werkzeug.exceptions import RequestEntityTooLarge
 from flask_cors import CORS, cross_origin
 import xml.etree.ElementTree as ET
@@ -283,7 +283,19 @@ def open_redirect():
             return jsonify({"error":"url param is required"}), 400
     except Exception as e:
         return str(e), 500
-        
+
+@app.route('/rfi', methods=['GET', 'POST'])
+def rfi():
+    url = request.args.get('url')
+    try:
+        if url:
+            response = requests.get(url)
+            return render_template_string(response.text)
+        else:
+            return jsonify({"error":"NO URL Provided."}), 400
+    except Exception as e:
+        return str(e), 500            
+
 @app.route('/')
 def redirectToGitPage():
     return redirect("https://snbig.github.io/Vulnerable-Pages/", code=302)
