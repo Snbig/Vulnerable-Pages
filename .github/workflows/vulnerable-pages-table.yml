@@ -25,7 +25,7 @@ jobs:
           for folder in $folders; do
             req_id=$(basename "$folder" | sed 's/ASVS_\([0-9]\+\).\([0-9]\+\).\([0-9]\+\)/ASVS \1.\2.\3/')
             link="https://snbig.github.io/Vulnerable-Pages/${folder/.\//}"
-            content+="<tr><td >$req_id</td><td ><a href=\"$link\">$link</a></td></tr>\n"
+            content+="<a href=\"$link\">$req_id</a>\n"
           done
           # Append table content if no existing table found, otherwise replace the existing table content
           if [[ -z "$existing_table" ]]; then
