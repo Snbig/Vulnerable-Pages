@@ -25,12 +25,17 @@ jobs:
           for folder in $folders; do
             req_id=$(basename "$folder" | sed 's/ASVS_\([0-9]\+\).\([0-9]\+\).\([0-9]\+\)/ASVS \1.\2.\3/')
             link="https://snbig.github.io/Vulnerable-Pages/${folder/.\//}"
-            content+="<a align="center" href=\"$link\">$req_id</a><br>"
+            content+="<li><a href="\"$link\"" style="display: inline-block; padding: 10px 20px; margin: 5px; background-color: #3f51b5; color: white; text-decoration: none; font-size: 16px; border-radius: 5px;">$req_id</a></li>"
+            
           done
           # Append table content if no existing table found, otherwise replace the existing table content
           if [[ -z "$existing_table" ]]; then
+            echo "<div class="asvs-container" style="margin: 0 auto; text-align: center;">" > README.md
             echo "<h1 style='color: #4CAF50;' align="center">ASVS Pages</h1>" >> README.md
+            echo "<ul class="asvs-list" style="list-style: none; padding: 0;">"
             echo -e "$content" >> README.md
+            echo "</ul>" >> README.md
+            echo "</div>" >> README.md
             
           else
             sed -i '/<h2>ASVS Pages/,/<\/table>/d' README.md
