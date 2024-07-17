@@ -34,7 +34,7 @@ jobs:
       - name: Update README
         run: |
           if [[ -z "$existing_table" ]]; then
-            echo "<div class=\"asvs-container\" style=\"margin: 0 auto; text-align: center;\">" >> README.md
+            echo "<div class=\"asvs-container\" style=\"margin: 0 auto; text-align: center;\">" > README.md
             echo "<h1 style='color: #4CAF50;' align=\"center\">ASVS Pages</h1>" >> README.md
             echo "<ul class=\"asvs-list\" style=\"list-style: none; padding: 0;\">" >> README.md
             cat table_content.txt >> README.md
