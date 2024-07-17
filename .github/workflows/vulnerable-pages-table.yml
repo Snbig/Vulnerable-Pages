@@ -13,36 +13,39 @@ jobs:
       - name: Read existing table (optional)
         run: |
           set +e
-          existing_table=$(cat README.md | grep -E '^<h2>ASVS Pages|<table>|</table>$')
+          existing_table=$(grep -E '^<h2>ASVS Pages|<table>|</table>$' README.md)
           if [[ ! -z "$existing_table" ]]; then
             echo "Existing table found. Updating..."
           else
             echo "No existing table found. Creating new table..."
           fi
+
+      - name: Generate new table content
+        run: |
           folders=$(find . -type d -regex ".*/ASVS_[0-9]+_[0-9]+_[0-9]+")
-          echo $folders
           content=""
           for folder in $folders; do
             req_id=$(basename "$folder" | sed 's/ASVS_\([0-9]\+\).\([0-9]\+\).\([0-9]\+\)/ASVS \1.\2.\3/')
             link="https://snbig.github.io/Vulnerable-Pages/${folder/.\//}"
-            content+="<li><a href="\"$link\"" style="display: inline-block; padding: 10px 20px; margin: 5px; background-color: #3f51b5; color: white; text-decoration: none; font-size: 16px; border-radius: 5px;">$req_id</a></li>"
-            
+            content+="<li><a href=\"$link\" style=\"display: inline-block; padding: 10px 20px; margin: 5px; background-color: #3f51b5; color: white; text-decoration: none; font-size: 16px; border-radius: 5px;\">$req_id</a></li>"
           done
-          # Append table content if no existing table found, otherwise replace the existing table content
+          echo "$content" > table_content.txt
+
+      - name: Update README
+        run: |
           if [[ -z "$existing_table" ]]; then
-            echo "<div class="asvs-container" style="margin: 0 auto; text-align: center;">" >> README.md
-            echo "<h1 style='color: #4CAF50;' align="center">ASVS Pages</h1>" >> README.md
-            echo "<ul class="asvs-list" style="list-style: none; padding: 0;">"
-            echo -e "$content" >> README.md
+            echo "<div class=\"asvs-container\" style=\"margin: 0 auto; text-align: center;\">" >> README.md
+            echo "<h1 style='color: #4CAF50;' align=\"center\">ASVS Pages</h1>" >> README.md
+            echo "<ul class=\"asvs-list\" style=\"list-style: none; padding: 0;\">" >> README.md
+            cat table_content.txt >> README.md
             echo "</ul>" >> README.md
             echo "</div>" >> README.md
-            
           else
             sed -i '/<h2>ASVS Pages/,/<\/table>/d' README.md
             echo "<h2 style='color: #4CAF50;'>ASVS Pages</h2>" >> README.md
             echo "<table style='border-collapse: collapse; width: 100%;'>" >> README.md
             echo "<tr style='background-color: #f2f2f2;'><th style='border: 1px solid #ddd; padding: 8px;'>ASVS Req. ID</th><th style='border: 1px solid #ddd; padding: 8px;'>Link</th></tr>" >> README.md
-            echo -e "$content" >> README.md
+            cat table_content.txt >> README.md
             echo "</table>" >> README.md
           fi
 
