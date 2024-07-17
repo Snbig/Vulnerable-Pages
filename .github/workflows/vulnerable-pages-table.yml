@@ -3,7 +3,6 @@ name: Update README Table
 on:
   push:
 
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -14,7 +13,7 @@ jobs:
       - name: Read existing table (optional)
         run: |
           set +e
-          existing_table=$(cat README.md | grep -E '^## ASVS Pages| ASVS Req\. ID \| Link \|$\n')
+          existing_table=$(cat README.md | grep -E '^<h2>ASVS Pages|<table>|</table>$')
           if [[ ! -z "$existing_table" ]]; then
             echo "Existing table found. Updating..."
           else
@@ -26,22 +25,22 @@ jobs:
           for folder in $folders; do
             req_id=$(basename "$folder" | sed 's/ASVS_\([0-9]\+\).\([0-9]\+\).\([0-9]\+\)/ASVS \1.\2.\3/')
             link="https://snbig.github.io/Vulnerable-Pages/${folder/.\//}"
-            content+="| $req_id | [$link]($link) |\n"
+            content+="<tr><td>$req_id</td><td><a href=\"$link\">$link</a></td></tr>\n"
           done
           # Append table content if no existing table found, otherwise replace the existing table content
           if [[ -z "$existing_table" ]]; then
-            echo "## ASVS Pages" >> README.md
-            echo "| ASVS Req. ID | Link |" >> README.md
-            echo "|---|---|" >> README.md
+            echo "<h2>ASVS Pages</h2>" >> README.md
+            echo "<table>" >> README.md
+            echo "<tr><th>ASVS Req. ID</th><th>Link</th></tr>" >> README.md
             echo -e "$content" >> README.md
+            echo "</table>" >> README.md
           else
-            echo "$existing_table" | grep -Ev '^## ASVS Pages\n' | head -n -2 >> README.md.tmp
-            echo "## ASVS Pages" >> README.md.tmp
-            echo "| ASVS Req. ID | Link |" >> README.md.tmp
-            echo "|---|---|" >> README.md.tmp
-            echo -e "$content" >> README.md.tmp
-            cat README.md.tmp > README.md
-            rm README.md.tmp
+            sed -i '/<h2>ASVS Pages/,/<\/table>/d' README.md
+            echo "<h2>ASVS Pages</h2>" >> README.md
+            echo "<table>" >> README.md
+            echo "<tr><th>ASVS Req. ID</th><th>Link</th></tr>" >> README.md
+            echo -e "$content" >> README.md
+            echo "</table>" >> README.md
           fi
 
       - name: Commit changes
