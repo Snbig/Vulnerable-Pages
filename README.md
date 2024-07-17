@@ -1,15 +1,3 @@
-## ASVS Pages
-| ASVS Req. ID | Link |
-|---|---|
-| ASVS 5.1.5 | [https://snbig.github.io/Vulnerable-Pages/ASVS_5_1_5](https://snbig.github.io/Vulnerable-Pages/ASVS_5_1_5) |
-| ASVS 14.5.3 | [https://snbig.github.io/Vulnerable-Pages/ASVS_14_5_3](https://snbig.github.io/Vulnerable-Pages/ASVS_14_5_3) |
-| ASVS 14.5.2 | [https://snbig.github.io/Vulnerable-Pages/ASVS_14_5_2](https://snbig.github.io/Vulnerable-Pages/ASVS_14_5_2) |
-| ASVS 13.3.1 | [https://snbig.github.io/Vulnerable-Pages/ASVS_13_3_1](https://snbig.github.io/Vulnerable-Pages/ASVS_13_3_1) |
-| ASVS 12.6.1 | [https://snbig.github.io/Vulnerable-Pages/ASVS_12_6_1](https://snbig.github.io/Vulnerable-Pages/ASVS_12_6_1) |
-| ASVS 13.2.2 | [https://snbig.github.io/Vulnerable-Pages/ASVS_13_2_2](https://snbig.github.io/Vulnerable-Pages/ASVS_13_2_2) |
-| ASVS 12.3.3 | [https://snbig.github.io/Vulnerable-Pages/ASVS_12_3_3](https://snbig.github.io/Vulnerable-Pages/ASVS_12_3_3) |
-| ASVS 12.1.1 | [https://snbig.github.io/Vulnerable-Pages/ASVS_12_1_1](https://snbig.github.io/Vulnerable-Pages/ASVS_12_1_1) |
-
 <h2>ASVS Pages</h2>
 <table>
 <tr><th>ASVS Req. ID</th><th>Link</th></tr>
