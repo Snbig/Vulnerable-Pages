@@ -1,11 +1,3 @@
-<h1 style='color: #4CAF50;' align=center>ASVS Pages</h1>
-
-</ul>
-</div>
-<h1 style='color: #4CAF50;' align=center>ASVS Pages</h1>
-
-</ul>
-</div>
 <div class="asvs-container" style="margin: 0 auto; text-align: center;">
 <h1 style='color: #4CAF50;' align="center">ASVS Pages</h1>
 <ul class="asvs-list" style="list-style: none; padding: 0;">
