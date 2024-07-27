@@ -296,6 +296,8 @@ def rfi():
     except Exception as e:
         return str(e), 500            
 
+@app.route('/rfi', methods=['GET', 'POST'])
+
 @app.route('/')
 def redirectToGitPage():
     return redirect("https://snbig.github.io/Vulnerable-Pages/", code=302)
