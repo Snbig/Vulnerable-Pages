@@ -296,7 +296,34 @@ def rfi():
     except Exception as e:
         return str(e), 500            
 
-@app.route('/rfi', methods=['GET', 'POST'])
+@app.route('/xss')
+def index():
+    name = request.args.get('name', '')
+
+    return '''
+        <!doctype html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Greeting</title>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+          <link rel="stylesheet" href="https://snbig.github.io/Vulnerable-Pages/ASVS_5_3_3/style.css">
+        </head>
+        <body>
+            <div class="container">
+                <h1><i class="fas fa-smile icon"></i> Welcome!</h1>
+                <form method="get">
+                    <input type="text" name="name" placeholder="Enter your name" value="" required>
+                    <button type="submit">Submit</button>
+                </form>
+
+                    <h2>Hello,%s!</h2>
+
+            </div>
+        </body>
+        </html>
+    ''' % name
 
 @app.route('/')
 def redirectToGitPage():
