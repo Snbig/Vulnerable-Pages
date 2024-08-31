@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>XML Schema Validation</title>
+    <title>ASVS 13.3.1</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -148,7 +148,7 @@
             xhr.onreadystatechange = function() {
                 if (xhr.readyState == 4) {
                     if (xhr.status == 200) {
-                        alert('XML data validated successfully!');
+                        handleErrorResponse('XML data validated successfully!');
                     } else {
                         handleErrorResponse(xhr.responseText);
                     }
