@@ -5,43 +5,125 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>XML Schema Validation</title>
     <style>
-        .error-message {
-            color: red;
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #a1c4fd, #c2e9fb);
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 1.5rem;
+        }
+
+        form {
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin: 0.5rem 0;
+        }
+
+        input[type="text"],
+        input[type="email"] {
+            width: calc(100% - 22px);
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+
+        button {
+            background: #007bff;
+            border: none;
+            color: #ffffff;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        #result {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: #ffdddd;
+            color: #d8000c;
+            border-radius: 4px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        #XSD_schema {
+            background: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 1rem;
+            max-width: 500px;
+            margin: 2rem auto 0;
+            text-align: left;
+            overflow-x: auto;
+        }
+
+        pre {
+            margin: 0;
+            white-space: pre-wrap;
+            word-wrap: break-word;
         }
     </style>
 </head>
 <body>
-    <h1>Send Username and Email in XML</h1>
+    <div>
+        <h1>Send Username and Email in XML</h1>
 
-    <form id="xmlForm">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required><br>
+        <form id="xmlForm">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
 
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required><br>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
 
-        <button type="button" onclick="sendXML()">Send XML</button>
-    </form>
+            <button type="button" onclick="sendXML()">Send XML</button>
+        </form>
 
-    <div id="result"></div>
+        <div id="result"></div>
 
-    <div id="XSD_schema"><pre>
-        &lt;xs:element name="user"&gt;
-            &lt;xs:complexType&gt;
-                &lt;xs:sequence&gt;
-                    &lt;xs:element name="username" type="xs:string"/&gt;
-                    &lt;xs:element name="email"&gt;
-                        &lt;xs:simpleType&gt;
-                            &lt;xs:restriction base="xs:string"&gt;
-                                &lt;!-- Add a pattern for email validation --&gt;
-                                &lt;xs:pattern value="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"/&gt;
-                            &lt;/xs:restriction&gt;
-                        &lt;/xs:simpleType&gt;
-                    &lt;/xs:element&gt;
-                &lt;/xs:sequence&gt;
-            &lt;/xs:complexType&gt;
-        &lt;/xs:element&gt;
-    </pre></div>
+        <div id="XSD_schema">
+            <pre>
+&lt;xs:element name="user"&gt;
+    &lt;xs:complexType&gt;
+        &lt;xs:sequence&gt;
+            &lt;xs:element name="username" type="xs:string"/&gt;
+            &lt;xs:element name="email"&gt;
+                &lt;xs:simpleType&gt;
+                    &lt;xs:restriction base="xs:string"&gt;
+                        &lt;!-- Add a pattern for email validation --&gt;
+                        &lt;xs:pattern value="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"/&gt;
+                    &lt;/xs:restriction&gt;
+                &lt;/xs:simpleType&gt;
+            &lt;/xs:element&gt;
+        &lt;/xs:sequence&gt;
+    &lt;/xs:complexType&gt;
+&lt;/xs:element&gt;
+            </pre>
+        </div>
+    </div>
 
     <script>
         function sendXML() {
