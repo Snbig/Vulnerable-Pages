@@ -64,10 +64,19 @@
         #result {
             margin-top: 1rem;
             padding: 1rem;
-            background: #ffdddd;
-            color: #d8000c;
             border-radius: 4px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .error-message {
+            background: #ffdddd;
+            color: #d8000c;
+        }
+
+        .success-message {
+            background: #d4edda;
+            color: #155724;
         }
 
         #XSD_schema {
@@ -92,14 +101,14 @@
     <div>
         <h1>Send Username and Email in XML</h1>
 
-        <form id="xmlForm">
+        <form id="xmlForm" onsubmit="sendXML(event)">
             <label for="username">Username:</label>
             <input type="text" id="username" name="username" required>
 
             <label for="email">Email:</label>
             <input type="email" id="email" name="email" required>
 
-            <button type="button" onclick="sendXML()">Send XML</button>
+            <button type="submit">Send XML</button>
         </form>
 
         <div id="result"></div>
@@ -126,7 +135,9 @@
     </div>
 
     <script>
-        function sendXML() {
+        function sendXML(event) {
+            event.preventDefault(); // Prevent the default form submission
+
             // Get values from form
             var username = document.getElementById('username').value;
             var email = document.getElementById('email').value;
@@ -148,7 +159,7 @@
             xhr.onreadystatechange = function() {
                 if (xhr.readyState == 4) {
                     if (xhr.status == 200) {
-                        handleErrorResponse('XML data validated successfully!');
+                        handleSuccessResponse('XML data validated successfully!');
                     } else {
                         handleErrorResponse(xhr.responseText);
                     }
@@ -158,13 +169,19 @@
         }
 
         function handleErrorResponse(responseText) {
-            // Display the error message in the 'result' div
             var resultDiv = document.getElementById('result');
-            
             resultDiv.innerHTML = ''; // Clear existing content
             var textNode = document.createTextNode(responseText);
             resultDiv.appendChild(textNode);
-            resultDiv.classList.add('error-message');
+            resultDiv.className = 'error-message'; // Apply error message styles
+        }
+
+        function handleSuccessResponse(responseText) {
+            var resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = ''; // Clear existing content
+            var textNode = document.createTextNode(responseText);
+            resultDiv.appendChild(textNode);
+            resultDiv.className = 'success-message'; // Apply success message styles
         }
     </script>
 </body>
