@@ -3,36 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ASVS 14.5.3</title>
+    <title>Beautiful Fetch UI</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Vulnerable Page</h1>
-    <button onclick="deleteAccount('victim_123')">Delete Account</button>
-    <p id="response"></p>
-
-    <script>
-        function deleteAccount(accountId) {
-            // Construct the API endpoint URL with the account ID
-            const apiUrl = `https://vulnerable-pages.onrender.com/accounts/${accountId}`;
-
-            // Make a DELETE request to the constructed API endpoint
-            fetch(apiUrl, {
-                method: 'DELETE'
-            })
-                .then(response => {
-                    if (response.status === 204) {
-                        // Account successfully deleted
-                        document.getElementById('response').innerText = 'Account deleted successfully.';
-                    } else {
-                        // Display an error message for other response codes
-                        document.getElementById('response').innerText = 'Error occurred: ' + response.status;
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    document.getElementById('response').innerText = 'Error occurred.';
-                });
-        }
-    </script>
+    <div class="container">
+        <h1>Fetch and Display Resource</h1>
+        <button onclick="fetchResource()">Fetch Resource</button>
+        <div id="content" class="content-box">
+            <!-- Resource content will be displayed here -->
+        </div>
+    </div>
+    <script src="script.js"></script>
 </body>
 </html>
