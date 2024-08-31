@@ -16,7 +16,7 @@ app = Flask(__name__, template_folder='.')
 
 # ASVS 14.5.2
 @app.route('/protected', methods=['GET'])
-@cross_origin(origins=['http://localhost'], methods=['GET'])
+@cross_origin(origins=['https://snbig.github.io'], methods=['GET', 'POST'])
 def protected_route():
     origin = request.headers.get('Origin')
     if origin == 'http://localhost':
