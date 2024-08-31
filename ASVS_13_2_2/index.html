@@ -4,29 +4,134 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JSON Schema Validation</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #a2c2e5, #e6f7ff);
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 1.5rem;
+        }
+
+        form {
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin: 0.5rem 0;
+        }
+
+        input[type="text"],
+        input[type="number"] {
+            width: calc(100% - 22px);
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+
+        button {
+            background: #28a745;
+            border: none;
+            color: #ffffff;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background: #218838;
+        }
+
+        #result {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 4px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: left;
+            max-width: 500px;
+            margin: 1rem auto;
+            white-space: pre-wrap;
+        }
+
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .success {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        #json_schema {
+            background: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 1rem;
+            max-width: 500px;
+            margin: 2rem auto 0;
+            text-align: left;
+            overflow-x: auto;
+            white-space: pre-wrap;
+        }
+
+        pre {
+            margin: 0;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+    </style>
 </head>
 <body>
-    <h1>Send name and age in JSON</h1>
-    
-    <form id="dataForm">
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name" required>
-        
-        <label for="age">Age:</label>
-        <input type="number" id="age" name="age" required>
+    <div>
+        <h1>Send Name and Age in JSON</h1>
 
-        <button type="button" onclick="submitData()">Submit</button>
-    </form>
+        <form id="dataForm">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
 
-    <div id="result"></div>
+            <label for="age">Age:</label>
+            <input type="number" id="age" name="age" required>
 
-    <div id="json_schema"><pre>
-    json_schema:
-    
-    {"type": "object", "properties": {"name": {"type": "string"},
-    "age": {"type": "integer", "minimum": 0, "maximum": 150}},
-    "required": ["name", "age"]}
-    <pre></div>
+            <button type="button" onclick="submitData()">Submit</button>
+        </form>
+
+        <div id="result"></div>
+
+        <div id="json_schema">
+            <pre>
+json_schema:
+
+{
+  "type": "object",
+  "properties": {
+    "name": {"type": "string"},
+    "age": {"type": "integer", "minimum": 0, "maximum": 150}
+  },
+  "required": ["name", "age"]
+}
+            </pre>
+        </div>
+    </div>
 
     <script>
         function submitData() {
@@ -40,7 +145,7 @@
                 age: age
             };
 
-            // Make a POST request to the Flask endpoint
+            // Make a POST request to the server
             fetch('https://vulnerable-pages.onrender.com/submit-json', {
                 method: 'POST',
                 headers: {
@@ -53,17 +158,22 @@
                 data: data
             })))
             .then(result => {
+                const resultDiv = document.getElementById('result');
                 if (result.status === 200) {
-                    // Display the result
-                    document.getElementById('result').innerText = JSON.stringify(result.data, null, 2);
+                    // Display success result
+                    resultDiv.innerText = JSON.stringify(result.data, null, 2);
+                    resultDiv.className = 'success';
                 } else {
                     // Display validation error message
-                    document.getElementById('result').innerText = `Error: ${result.data.message}`;
+                    resultDiv.innerText = `Error: ${result.data.message}`;
+                    resultDiv.className = 'error';
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
-                document.getElementById('result').innerText = 'An unexpected error occurred.';
+                const resultDiv = document.getElementById('result');
+                resultDiv.innerText = 'An unexpected error occurred.';
+                resultDiv.className = 'error';
             });
         }
     </script>
