@@ -28,12 +28,12 @@ def protected_route():
 
 
 # ASVS 14.5.3
-@app.route('/accounts/<account_id>', methods=['DELETE'])
-@cross_origin(send_wildcard=True, methods=['DELETE'])
+@app.route('/accounts/<account_id>', methods=['GET'])
+@cross_origin(send_wildcard=True, methods=['GET'])
 def delete_account(account_id):
     accounts = ['victim_123']
     if account_id in accounts:
-        return jsonify({'message': f'Account {account_id} successfully deleted'}), 204
+        return 's3cR3t: ASVS{Th3_Secret_Code_Is_4n_E4sy_T1me}', 200
     else:
         return jsonify({'error': 'Account not found'}), 404
 
