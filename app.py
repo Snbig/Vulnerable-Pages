@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify, render_template, redirect, render_template_string
 from werkzeug.exceptions import RequestEntityTooLarge
 from flask_cors import CORS, cross_origin
+import os
 import xml.etree.ElementTree as ET
 import xmlschema
 from jsonschema import validate, ValidationError
@@ -13,6 +14,8 @@ from urllib.parse import urlparse
 import requests
 
 app = Flask(__name__, template_folder='.')
+
+os.chroot('/workspaces/Vulnerable-Pages/static/chroot')
 
 # ASVS 14.5.2
 @app.route('/protected', methods=['GET'])
@@ -273,6 +276,8 @@ def ssrf(id):
     else:
         return jsonify({"error":"Route Not Found"}), 404
 
+# ASVS 5.1.5
+
 @app.route('/redirect', methods=['GET'])
 def open_redirect():
     try:
@@ -283,6 +288,8 @@ def open_redirect():
             return jsonify({"error":"url param is required"}), 400
     except Exception as e:
         return str(e), 500
+
+# ASVS 12.3.3
 
 @app.route('/rfi', methods=['GET', 'POST'])
 def rfi():
@@ -295,6 +302,8 @@ def rfi():
             return jsonify({"error":"NO URL Provided."}), 400
     except Exception as e:
         return str(e), 500            
+
+# ASVS 5.3.3
 
 @app.route('/xss')
 def index():
@@ -324,6 +333,18 @@ def index():
         </body>
         </html>
     ''' % name
+
+# ASVS 5.2.5
+
+@app.route("/ssti")
+def home():
+    if request.args.post('c'):
+        return render_template_string(request.args.get('c'))
+    else:
+        return "Hello, send someting inside the param 'c'!"
+
+if __name__ == "__main__":
+    app.run()
 
 @app.route('/')
 def redirectToGitPage():
