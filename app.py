@@ -10,12 +10,14 @@ import pyzipper
 from io import BytesIO
 import shutil
 import urllib
+from pathlib import Path
 from urllib.parse import urlparse
 import requests
 
 app = Flask(__name__, template_folder='.')
 
-os.chroot('/workspaces/Vulnerable-Pages/static/chroot')
+Path('./static/chroot').mkdir(parents=True, exist_ok=True)
+os.chroot('./static/chroot')
 
 # ASVS 14.5.2
 @app.route('/protected', methods=['GET'])
