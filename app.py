@@ -338,13 +338,13 @@ def index():
 
 # ASVS 5.2.5
 
-@app.route("/ssti")
-def home():
+@app.route('/ssti', methods=['GET', 'POST'])
+def ssti():
     payload = request.args.get('c')
     if payload:
         return render_template_string(payload)
     else:
-        return "Hello, send someting inside the param 'c'!"
+        return "Hello, send something inside the param 'c'!"
 
 
 @app.route('/')
