@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SSTI Lab</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7fd;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #89fffd, #ef32d9);
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            width: 350px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .container:hover {
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="text"]:focus {
+            border-color: #ef32d9;
+            outline: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #ef32d9, #89fffd);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background: linear-gradient(135deg, #89fffd, #ef32d9);
+        }
+
+        .result {
+            margin-top: 20px;
+            padding: 10px;
+            font-size: 1.2em;
+            color: #444;
+            border-radius: 8px;
+            background-color: #f4f7fd;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .result strong {
+            color: #ef32d9;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>SSTI Lab</h1>
+        <input type="text" id="payload-input" placeholder="Enter template string" required>
+        <button id="submit-btn">Submit</button>
+        <div id="result" class="result"></div>
+    </div>
+
+    <script>
+        document.getElementById('submit-btn').addEventListener('click', function() {
+            const payload = document.getElementById('payload-input').value;
+
+            // Make sure payload is not empty
+            if (payload) {
+                // Perform fetch request
+                fetch(`https://vulnerable-pages.onrender.com/ssti?c=${encodeURIComponent(payload)}`)
+                    .then(response => response.text())
+                    .then(data => {
+                        // Display the result in the result div
+                        document.getElementById('result').innerHTML = `<strong>Result:</strong> ${data}`;
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        document.getElementById('result').innerHTML = "Error processing request.";
+                    });
+            } else {
+                document.getElementById('result').innerHTML = "Please enter a valid payload.";
+            }
+        });
+    </script>
+
+</body>
+</html>
