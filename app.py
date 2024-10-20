@@ -16,9 +16,6 @@ import requests
 
 app = Flask(__name__, template_folder='.')
 
-Path('./static/chroot').mkdir(parents=True, exist_ok=True)
-os.chroot('./static/chroot')
-
 # ASVS 14.5.2
 @app.route('/protected', methods=['GET'])
 @cross_origin(origins=['https://snbig.github.io'], methods=['GET', 'POST'])
