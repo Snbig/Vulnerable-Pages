@@ -340,13 +340,12 @@ def index():
 
 @app.route("/ssti")
 def home():
-    if request.args.post('c'):
-        return render_template_string(request.args.get('c'))
+    payload = request.args.get('c')
+    if payload:
+        return render_template_string(payload)
     else:
         return "Hello, send someting inside the param 'c'!"
 
-if __name__ == "__main__":
-    app.run()
 
 @app.route('/')
 def redirectToGitPage():
