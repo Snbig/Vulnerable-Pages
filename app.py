@@ -336,6 +336,7 @@ def index():
 # ASVS 5.2.5
 
 @app.route('/ssti', methods=['GET', 'POST'])
+@cross_origin(origins=['https://snbig.github.io'], methods=['POST','GET'])
 def ssti():
     payload = request.args.get('c')
     if payload:
