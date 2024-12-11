@@ -344,6 +344,16 @@ def ssti():
     else:
         return "Hello, send something inside the param 'c'!"
 
+# ASVS 5.3.9
+
+@app.route('/')
+def index():
+    page = request.args.get('page', 'home')  # دریافت پارامتر صفحه از URL
+    try:
+        return open(f'pages/{page}.html').read()  # بارگذاری فایل مشخص شده از دایرکتوری 'pages'
+    except FileNotFoundError:
+        return 'صفحه مورد نظر یافت نشد.'
+
 
 @app.route('/')
 def redirectToGitPage():
