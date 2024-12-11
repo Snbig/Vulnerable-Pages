@@ -346,11 +346,11 @@ def ssti():
 
 # ASVS 5.3.9
 
-@app.route('/')
+@app.route('/lfi')
 def index():
-    page = request.args.get('page', 'home')  # دریافت پارامتر صفحه از URL
+    page = request.args.get('page', 'home')  
     try:
-        return open(f'pages/{page}.html').read()  # بارگذاری فایل مشخص شده از دایرکتوری 'pages'
+        return open(f'pages/{page}.html').read()  
     except FileNotFoundError:
         return 'صفحه مورد نظر یافت نشد.'
 
