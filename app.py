@@ -348,11 +348,11 @@ def ssti():
 
 @app.route('/lfi', methods=['GET', 'POST'])
 def index():
-    page = request.args.get('page', 'home')  
+    page = request.args.get('page', 'home')
     try:
-        return open(f'pages/{page}.html').read()  
+        return open(page).read()
     except FileNotFoundError:
-        return 'صفحه مورد نظر یافت نشد.'
+        return 'Error'
 
 
 @app.route('/')
