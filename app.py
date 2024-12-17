@@ -347,7 +347,7 @@ def ssti():
 # ASVS 5.3.9
 
 @app.route('/lfi', methods=['GET', 'POST'])
-def index():
+def lfi():
     page = request.args.get('page', 'home')
     try:
         return open(page).read()
