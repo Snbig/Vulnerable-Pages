@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Page (Password Manager Disabled)</title>
+    <title>Login Page (Password Manager disabled)</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -17,7 +17,8 @@
                 </div>
                 <div class="input-group">
                     <label for="password">Password</label>
-                    <input type="password" id="password" name="password" autocomplete="new-password" required>
+                    <input type="password" id="password" required>
+                    <input type="password" id="decoy" name="decoy" style="display:none;" tabindex="-1">
                 </div>
                 <button type="submit">Sign In</button>
             </form>
