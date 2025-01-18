@@ -347,6 +347,7 @@ def ssti():
 # ASVS 5.3.9
 
 @app.route('/lfi', methods=['GET', 'POST'])
+@cross_origin(origins=['https://snbig.github.io'], methods=['POST','GET'])
 def lfi():
     page = request.args.get('page', 'home')
     try:
