@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vulnerable LFI Lab</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Local File Inclusion (LFI) Lab</h1>
+            <p>Test and understand the risks of Local File Inclusion vulnerabilities</p>
+        </header>
+
+        <main>
+            <label for="page">Enter the file to include:</label>
+            <input type="text" id="page" placeholder="Enter file path..." oninput="fetchFileContent()">
+
+            <div class="output">
+                <h2>File Output:</h2>
+                <pre id="file-output">Enter a file path to fetch content.</pre>
+            </div>
+        </main>
+
+    </div>
+
+    <script>
+        function fetchFileContent() {
+            const page = document.getElementById('page').value;  // Get the value from the input field
+            const outputElement = document.getElementById('file-output');
+            
+            if (!page) {
+                outputElement.textContent = 'Enter a file path to fetch content.';
+                return;
+            }
+
+            // Send the GET request using fetch
+            fetch(`https://vulnerable-pages.onrender.com/lfi?page=${encodeURIComponent(page)}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.content) {
+                        outputElement.textContent = data.content;  // Display file content
+                    } else {
+                        outputElement.textContent = `Error: ${data.error}`;  // Display error
+                    }
+                })
+                .catch(error => {
+                    outputElement.textContent = 'An error occurred while fetching the file.';
+                });
+        }
+    </script>
+</body>
+</html>
