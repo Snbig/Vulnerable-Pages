@@ -26,7 +26,7 @@
     </div>
 
     <script>
-        function fetchFileContent() {
+        async function fetchFileContent() {
             const page = document.getElementById('page').value;  // Get the value from the input field
             const outputElement = document.getElementById('file-output');
             
@@ -36,16 +36,24 @@
             }
 
             try {
-                const response = fetch(`https://vulnerable-pages.onrender.com/lfi?page=${encodeURIComponent(page)}`)
+                // Fetch the file content from the server
+                const response = await fetch(`https://vulnerable-pages.onrender.com/lfi?page=${encodeURIComponent(page)}`);
+
+                // Check if the response is successful
                 if (!response.ok) {
-                throw new Error(`Response status: ${response.status}`);
-                                }
-                const json =  response.json();
-                outputElement.textContent =json;
+                    throw new Error(`Response status: ${response.status}`);
+                }
+
+                // Read the response as text (since it's plain text, not JSON)
+                const text = await response.text();
+
+                // Display the file content or error
+                outputElement.textContent = text;  // Show the raw text content from the file
             } catch (error) {
-                outputElement.textContent = error.message;
-                            }
-                        }
+                // Handle any errors during fetch or response parsing
+                outputElement.textContent = `Error: ${error.message}`;
+            }
+        }
     </script>
 </body>
 </html>
