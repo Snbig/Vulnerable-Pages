@@ -15,14 +15,14 @@
 
         <main>
             <label for="page">Enter the file to include:</label>
-            <input type="text" id="page" placeholder="Enter file path..." oninput="fetchFileContent()">
+            <input type="text" id="page" placeholder="Enter file path...">
+            <button id="fetchButton" class="btn" onclick="fetchFileContent()">Fetch File</button>
 
             <div class="output">
                 <h2>File Output:</h2>
-                <pre id="file-output">Enter a file path to fetch content.</pre>
+                <pre id="file-output">Enter a file path and click "Fetch File" to see the content.</pre>
             </div>
         </main>
-
     </div>
 
     <script>
@@ -31,7 +31,7 @@
             const outputElement = document.getElementById('file-output');
             
             if (!page) {
-                outputElement.textContent = 'Enter a file path to fetch content.';
+                outputElement.textContent = 'Please enter a file path.';
                 return;
             }
 
