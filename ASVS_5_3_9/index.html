@@ -35,20 +35,17 @@
                 return;
             }
 
-            // Send the GET request using fetch
-            fetch(`https://vulnerable-pages.onrender.com/lfi?page=${encodeURIComponent(page)}`)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.content) {
-                        outputElement.textContent = data.content;  // Display file content
-                    } else {
-                        outputElement.textContent = `Error: ${data.error}`;  // Display error
-                    }
-                })
-                .catch(error => {
-                    outputElement.textContent = 'An error occurred while fetching the file.';
-                });
-        }
+            try {
+                const response = fetch(`https://vulnerable-pages.onrender.com/lfi?page=${encodeURIComponent(page)}`)
+                if (!response.ok) {
+                throw new Error(`Response status: ${response.status}`);
+                                }
+                const json =  response.json();
+                outputElement.textContent =json;
+            } catch (error) {
+                outputElement.textContent = error.message;
+                            }
+                        }
     </script>
 </body>
 </html>
