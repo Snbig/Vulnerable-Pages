@@ -355,6 +355,20 @@ def lfi():
     except FileNotFoundError:
         return 'Error'
 
+# ASVS 3.4.1
+# ASVS 3.4.2
+# ASVS 3.4.3
+
+@app.route("/set-cookie")
+def set_cookie():
+    
+    response = make_response(jsonify(message="Session cookie set without security attributes."))
+    
+    response.set_cookie(
+        "session_token",
+        value="1234567890abcdef")
+    
+    return response
 
 @app.route('/')
 def redirectToGitPage():
