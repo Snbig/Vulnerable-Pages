@@ -363,14 +363,13 @@ def lfi():
 
 @app.route("/set-cookie")
 def set_cookie():
-    
-    response = make_response(jsonify(message="Session cookie set without security attributes."))
-    
-    response.set_cookie(
-        "session_token",
-        value="1234567890abcdef")
-    
-    return response
+    try:
+            response = make_response(jsonify(message="Session cookie set without security attributes."))
+            response.set_cookie("session_token", value="1234567890abcdef")
+            return response
+
+    except Exception as e:
+        return str(e), 500   
 
 @app.route('/')
 def redirectToGitPage():
