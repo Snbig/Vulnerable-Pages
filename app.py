@@ -16,6 +16,8 @@ import requests
 
 app = Flask(__name__, template_folder='.')
 
+app.secret_key = "supersecretkey"
+
 # ASVS 14.5.2
 @app.route('/protected', methods=['GET'])
 @cross_origin(origins=['https://snbig.github.io'], methods=['GET', 'POST'])
